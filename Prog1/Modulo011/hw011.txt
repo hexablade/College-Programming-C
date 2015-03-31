@@ -1,0 +1,259 @@
+time:4 hrs
+Exercises:
+11.1
+a and g
+
+11.2
+e,f,i,
+
+11.3
+The error is located in the body of the function where sum and avg are pointers to a long and they should be written as *sum and *avg.
+
+void avg_sum(double a[], int n, double *avg, double *sum)
+{
+    int i;
+
+    *sum = 0.0;
+    for (i = 0; i< n; i++)
+        *sum += a[i];
+    *avg = *sum / n;
+}
+
+11.4
+
+void swap( int *p, int *q)
+{
+   int tmp;
+	
+   tmp = *p;
+   *p = *q;
+   *q = tmp;	
+   
+}
+
+11.6
+
+void find_two_largest(int a[], int n, int *largest,
+                      int *second_largest)
+{
+  int i;
+
+  if (a[0] > a[1]) {
+    *largest = a[0];
+    *second_largest = a[1];
+  } else {
+    *largest = a[1];
+    *second_largest = a[0];
+  }
+
+  for (i = 2; i < n; i++)
+    if (a[i] > *largest) {
+      *second_largest = *largest;
+      *largest = a[i];
+    } else if (a[i] > *second_largest)
+      *second_largest = a[i];
+}
+
+12.1
+
+a)14
+b)34
+c) 4
+d) false
+e) false
+
+12.2
+
+The statement is illegal because pointers cannot be added. Here is a fix:
+
+middle = low + (high - low) / 2;
+The value of (high - low) / 2 is an integer so it can be added to low.
+
+12.5
+
+b and d are true.
+
+12.6
+
+int sum_array(const int a[], int n)
+{
+  int *p, sum;
+
+  sum = 0;
+  for (p = a; p < a + n; p++)
+    sum += *p;
+  return sum;
+}
+
+12.8
+
+void store_zeroes(int a[], int n)
+{
+  int *pa;
+  for (pa = a; pa < a + n; pa++)
+    *pa = 0;
+}
+
+
+12.16
+
+int *find_largest(int *a, int n);
+
+  for (int d = 0; d < DAYS; d++)  {
+    printf("High for day %d: %2d -- ", d, *find_largest(temperatures[d], HOURS));
+     print_temperatures(d);		     
+ }
+
+int *find_largest(int *a, int n)
+{
+  int *a_ptr, *max_ptr;
+  max_ptr = a;
+  for (a_ptr = a; a_ptr < a + n; a_ptr++) {
+    if (*a_ptr > *max_ptr)
+      max_ptr = a_ptr;
+  }
+
+  return max_ptr;
+}
+
+
+16.1
+
+Yes because you can have 
+  
+  struct { int x, y; } x;
+  struct { int x, y; } y;
+for x:
+  x.x = 1;
+  x.y = 2;
+and for y:
+  y.x = 10;
+  y.y = 20;
+}
+
+16.4
+
+(a)
+
+typedef struct {
+  double real, imaginary;
+} Complex;
+(b) Complex c1, c2, c3;
+
+(c)
+
+Complex make_complex(double real, double imaginary)
+{
+  Complex c;
+
+  c.real = real;
+  c.imaginary = imaginary;
+  return c;
+}
+(d)
+
+Complex add_complex(Complex c1, Complex c2)
+{
+  Complex c3;
+
+  c3.real = c1.real + c2.real;
+  c3.imaginary = c1.imaginary + c2.imaginary;
+  return c3;
+}
+
+16.7
+
+typedef struct 
+{ 
+int numerator;
+int denominator;
+ } fraction;
+
+int gcd(int a, int b);
+fraction reduce(fraction );
+void print_fraction(char *, fraction);
+void convert_terms(fraction *, fraction *);
+fraction add(fraction, fraction);
+fraction subtract(fraction, fraction);
+fraction multiply(fraction, fraction);
+fraction divide(fraction, fraction);
+
+int main(int argc, char *argv[])
+{
+  if (argc < 3)
+    invocation_error(argv[0], "int int  (i.e., numerator and denominator)");
+
+  fraction f1 = { atoi(argv[1]), atoi(argv[2])};
+  fraction f2;
+  print_fraction("F1", f1);
+
+  if (argc == 5)  {
+    f2.numerator = atoi(argv[3]);
+    f2.denominator = atoi(argv[4]);
+    print_fraction("F2", f2);
+  }
+  printf("F1 GCD: %d\n", gcd(f1.numerator, f1.denominator));
+  print_fraction("F1 Reduced", reduce(f1));
+  print_fraction("f1 + f2 =", add(f1, f2));
+  print_fraction("f1 - f2 =", subtract(f1, f2));
+
+  return 0;
+}
+int gcd(int a, int b)
+{
+  if (b == 0)
+    return a;
+  return gcd(b, a % b);
+
+}
+
+fraction reduce(fraction f)
+{
+  int greatest_common_factor = gcd(f.numerator, f.denominator);
+  return (fraction) {f.numerator / greatest_common_factor, f.denominator / greatest_common_factor};
+}
+
+/* express both fractions in terms of the lowest common denominator */
+void convert_terms(fraction *f1, fraction *f2)
+{
+  fraction *with_greater = f1, *other = f2;
+  int i, common_denominator;
+
+  if (f2->denominator > with_greater->denominator) {
+    with_greater = f2;
+    other = f1;
+  }
+
+  i = 1;
+  do {
+    common_denominator = with_greater->denominator * i;
+    i++;
+  } while (common_denominator % other->denominator > 0);
+
+  other->numerator         *= common_denominator / other->denominator;
+  other->denominator        = common_denominator;
+  with_greater->numerator  *= common_denominator / with_greater->denominator;
+  with_greater->denominator = common_denominator;
+}
+fraction add(fraction f1, fraction f2)
+{
+  convert_terms(&f1, &f2);
+  return reduce((fraction) {f1.numerator + f2.numerator, f1.denominator});
+}
+fraction subtract(fraction f1, fraction f2)
+{
+  convert_terms(&f1, &f2);
+  return reduce((fraction) {f1.numerator - f2.numerator, f1.denominator});
+}
+void print_fraction(char *header, fraction f)
+{
+  printf("%s %d/%d\n", header, f.numerator, f.denominator);
+}
+fraction multiply(fraction f1, fraction f2)
+{
+  return reduce((fraction) {f1.numerator * f2.numerator, f1.denominator * f2.denominator});
+}
+fraction divide(fraction f1, fraction f2)
+{
+  return reduce((fraction) {f1.numerator * f2.denominator, f1.denominator * f2.numerator});
+}

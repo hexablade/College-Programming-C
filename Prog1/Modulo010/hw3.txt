@@ -1,0 +1,123 @@
+109 minutes     
+	Exercise 9.1
+
+The two errors that I found where the missing type for the parameter (Height), and the variable declaration of (double product;) outside of the function.
+Solution:
+
+My fix looks like this:
+
+double triangle_area(double base, double height)
+{
+    double product;
+
+    product = base * height;
+    return product / 2; 
+}
+
+    Exercise 9.3
+
+Function for the Greatest Common Divisor:
+
+int gcd(int m, int n){
+
+    int GCD;
+        
+    while(n!=0)
+{
+        GCD = m%n;
+        m = n;
+        n = GCD;
+    
+    return GCD;
+
+}
+ 
+    Exercise 9.9
+
+The function will swap the values of i and j, so the outcome would look something like:
+
+i = 2 and j = 1 for the exercise example.
+
+    Exercise 9.14
+
+The error is located in the return statements and they give a compiler warning like this, "warning: control reaches end of non-void function [-Wreturn-type]"
+
+My solution to this problem is the following;
+
+ bool has_zero(int a[], int n)
+ {
+   double result; 
+   int i;
+
+     for(i=0; i<n; i++)
+         if(a[i] ==0 )
+            result =  true;
+         else
+            result =  false;
+     return result;
+ }
+  
+    Exercise 9.15
+
+double median(double x, double y, double z)
+{
+  double result;
+
+  if (x <= y)
+    if (y <= z) result = y;
+    else if (x <= z) result = z;
+    else result = x;
+  else {
+    if (z <= y) result = y;
+    else if (x <= z) result = x;
+    else result = z;
+  }
+
+  return result;
+}
+
+    Exercise 9.19
+
+void pb(int n)
+{
+    if (n != 0){
+        pb(n / 2);
+        putchar('0' + n % 2);
+    }
+}
+
+The function output for a number that I entered: 
+
+Enter a number: 20
+Output of pb: 10100
+
+where 10100 is the binary representation of the number 20.
+
+A trace of pb's execution would look like this:
+
+pb(20) finds that 20 is not equal to 0, so it continues 
+pb(10), which finds that 10 is not equal to 0, so it continues 
+pb(5), which finds that 5 is not equal to 0, so it continues
+pb(2), which finds that 2 is not equal to 0, so it continues
+pb(1), which finds that 1 is not equal to 0, so it continues 
+pb(0), which finds that 0 is equal to 0, so it returns, which causes
+pb(1), to print 1 and return, which continues
+pb(2), to print 0 and return, which continues
+pb(5), to print 1 and return, which continues
+pb(10), to print 0 and return, which continues
+pb(20), to print 0 and return, which continues
+
+    Exercise  10.1
+
+(a) a, b, and c are visible.
+(b) a, and d are visible.
+(c) a, d, and e are visible.
+(d) a and f are visible.
+    
+    Exercise 10.2
+(a) b, c, and d are visible. The local variable c is visible and has the same name as the global variable b. 
+(b) b, c, and a are visible. The local variable b is visible and has the same name as the global variable c.
+(c) b, c, a, and d are visible. Both a and c share the same name with other variables / parameters.
+(d) b, c, and d are visible. The local variable c is visible and has the same name as the global variable c.
+    
+

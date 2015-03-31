@@ -1,0 +1,49 @@
+Supplemental 
+
+13.1
+
+e)Inside the printf function, should be in double quotes
+h)the putchar function to print a single character, it should be in  
+single quote
+i) puts function to display a string , should be in double quotes
+
+13.2
+
+(a) Illegal; p is not a character.
+(b) Legal; output is a.
+(c) Legal; output is abc.
+(d) Illegal; *p is not a pointer.
+
+
+13.5
+
+a) Function Capitalize
+
+void capitalise(int n, char str[n])
+{
+	for (int i = 0; i < n; ++i)
+		str[i] = toupper(str[i]);
+	return;
+}
+
+b)pointer arithmetic
+
+void capitalise(int n, char str[n])
+{
+	for (char *p = str; p < str + n; ++p)
+		*p = toupper(*p);
+	return;
+}
+
+13.7
+
+(a) *str = 0;
+
+
+13.8
+
+tired-or-wired
+
+13.9
+
+the value of s1 will be “sc”

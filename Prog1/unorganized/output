@@ -1,0 +1,25 @@
+name = David
+#include <stdio.h>
+
+void io0(void)
+{
+    int ch;
+    while ((ch = getchar()) != EOF){
+       putchar(ch);
+    } 
+}
+void io1(void)
+{
+    char str[100];
+    while(gets(str) != NULL){
+        puts(str);
+    }        
+}
+
+int main(int argc, char* argv[])
+{
+    char name[6] = "David";
+    char *p = name;
+    printf("name = %s\n", p);
+    io1();
+}

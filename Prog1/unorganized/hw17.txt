@@ -1,0 +1,121 @@
+Exercise 17.1
+
+#include <stdio.h>
+
+#include <stdlib.h>
+#include <limits.h>
+#include <string.h>
+
+void *malloc_or_die(size_t size)
+{
+  void *p;
+
+  if ((p = malloc(size))== NULL) {
+    printf( "Out of memory”);
+    exit(1);
+  }
+
+  return p;
+}
+int main(void)
+{
+
+  char *s;
+  for (int i = 0; i < 20000; i++)
+  {
+    s = malloc_or_die(INT_MAX);
+    if ( i % 8 == 0)
+      printf("%s\n", s);
+    printf("%p\t",s);
+  }
+  return 0;
+}
+
+Exercise 17.2
+
+char *duplicate(const char *s)
+{
+  char *temp = malloc(strlen(s) + 1);
+
+  if (temp == NULL)
+    return NULL;
+
+  strcpy(temp, s);
+  return temp;
+}
+
+Exercise 17.4
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+  struct point { int x, y; };
+  struct rectangle { struct point upper_left, lower_right; };
+  struct rectangle *p;
+
+  p = malloc(sizeof(struct rectangle));
+  p->upper_left = (struct point){10,25};
+  p->lower_right = (struct point){20,15};
+
+  return 0;
+}
+Exercise 17.7
+
+The first call of free will release the space for the first node in the list, making p a dangling pointer. Executing p = p->next to advance to the next node will have an undefined effect. Here's a correct way to write the loop, using a temporary pointer that points to the node being deleted:
+
+struct node *temp;
+
+p = first;
+while (p != NULL) {
+  temp = p;
+  p = p->next;
+  free(temp);
+}
+
+Exercise 17.9
+True, because (&x) -> a is statement that deference the pointer to the structure that a is a ember of, meaning it is now a copy if that member,  and x.a holds a copy of the member a.
+
+Exercise 17.11
+
+int count_occurrences(struct node *list, int n)
+{
+	int found = 0;
+	for (; list != NULL; list = list->next)
+		if (list->value == n)
+			++found;
+	return found;
+}
+
+Exercise 17.13
+
+Case 1:  new_node->value < head->value  (beginning)
+
+  assign address of structure pointed to by head to new_node->next
+  assign address of structure pointed to by new_node to head
+  return head
+
+  i.e.,
+  new_node->next = head;
+  head           = new_node;
+  return head;
+
+Cases 2     :  new_node->value <= last->value  (middle)
+       and 3:  new_node->value >  last->value  (end)
+  assign address of structure pointed to by head to current and NULL to previous
+  while current is != NULL and current->value <= new_node->value
+    advance current and previous, i.e:
+      assign address of structure pointed to by current to previous (prev = cur;)
+      assign address of structure pointed to by current->next to current (cur = cur->next;)
+
+  assign address of structure pointed to by new_node to previous->next
+      i.e. (prev->next = new_node;)
+      works for middle and end
+
+  if current != NULL (because current->next was NOT null on last iteration of the loop, i.e, a middle case)
+      assign address of structure pointed to by current to new_node->next   (new_node->next = current;)
+
+
+  return head
+

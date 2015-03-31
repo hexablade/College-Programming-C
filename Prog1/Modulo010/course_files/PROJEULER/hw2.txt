@@ -1,0 +1,49 @@
+Crystopher Echavarria
+Programming 230
+Exercises Modulo 001
+
+    Exercises 6.1
+
+The outcome is a list of numbers beginning with the 
+value of i, which is 1, and ending at 128. The list is the 
+outcome of multiplying 2*i, until the value of i is equal
+to 128, then it stops.
+
+    Exercise 6.11
+
+The outcome is 20.
+
+    Exercise 8.1
+The problem is that when you read the program you would have to locate the declaration of a and make sure that t is one type of its elements.
+
+
+    Exercise 8.5
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main (int argc, char*args[]){
+
+    int i;
+    int a[40] = {1, 1};
+    
+	printf("%i %i ", a[0], a[1]);
+    
+    for(i = 2; i < 40; i++){
+        a[i] = a[i-1] + a[i - 2];
+        printf(“Fib number: %i ”, a[i]);
+    }    
+    printf(“ \n”);
+}
+
+    Exercise 8.8
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+   int a[30][24];
+   int i;
+   int j;
+   int 
